@@ -1,0 +1,182 @@
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Wind Bashkort </title>
+  <style type="text/css">
+
+  </style>
+  <link rel="stylesheet" type="text/css" href="./stylewind.css">
+  <!-- <link rel="stylesheet" href="https://js.arcgis.com/4.18/esri/themes/dark/main.css">
+  <script src="https://js.arcgis.com/4.18/"></script> -->
+  <link rel="stylesheet " href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+
+
+  <link rel="stylesheet" href="../dist/L.Control.Locate.min.css" />
+  <link rel="stylesheet" href="../dist/leaflet.defaultextent.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin="" />
+
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
+
+  <script src="https://cdn-geoweb.s3.amazonaws.com/esri-leaflet/0.0.1-beta.5/esri-leaflet.js"></script>
+  <script
+    src="https://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.5/esri-leaflet-geocoder.js"></script>
+  <link rel="stylesheet" type="text/css"
+    href="https://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.5/esri-leaflet-geocoder.css">
+
+  <script src="leaflet.ajax.min.js"></script>
+
+  <script src="../dist/leaflet.defaultextent.js"></script>
+  <script src="../dist/L.Control.Locate.min.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="ymCal.css" />
+  <link rel="stylesheet" href="leaflet-sidebar.css" />
+  <script type="text/javascript" src="jquery.js"></script>
+  <script type="text/javascript" src="ymCal.js"></script>
+  <script type="text/javascript" src="leaflet-sidebar.js"></script>
+  <script type="text/javascript" src="leaflet.browser.print.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
+  <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.min.css'>
+
+  <link href="../graph/c3.css" rel="stylesheet">
+  <!-- Load d3.js and c3.js -->
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+  <script src="../graph/c3.min.js"></script>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.css">
+  <script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script>
+
+</head>
+
+<div id="mapid">
+  <!-- optionally define the sidebar content via HTML markup -->
+  <div id="sidebar" class="leaflet-sidebar collapsed">
+
+    <!-- nav tabs -->
+    <div class="leaflet-sidebar-tabs">
+      <!-- top aligned tabs -->
+      <ul role="tablist">
+        <li><a href="#autopan" role="tab"><i class="fa fa-bars active"></i></a></li>
+
+        <li><a href="#graph" role="tab"><i class="fa fa-line-chart"></i></a></li>
+        <li><a href="#tablebar" role="tab"><i class="fa fa-table"></i></a></li>
+
+      </ul>
+
+      <!-- bottom aligned tabs -->
+      <ul role="tablist">
+        <li>
+          <a href="#profile" role="tab"><i class="fa fa-user"></i></a>
+
+        </li>
+      </ul>
+    </div>
+
+    <!-- panel content -->
+    <div class="leaflet-sidebar-content">
+
+
+      <div class="leaflet-sidebar-pane" id="profile">
+        <h1 class="leaflet-sidebar-header"> Сведения о программном продукте
+          <p></p>
+          <span class="leaflet-sidebar-close"><i class="fa fa-caret-left"></i></span>
+
+        </h1>
+        <p>
+          Данный программный продукт разработан Тимофеевым А.В.>
+        </p>
+      </div>   
+   
+      <div class="leaflet-sidebar-pane" id="autopan">
+        <h1 class="leaflet-sidebar-header">
+          Параметры для расчётов
+          <span class="leaflet-sidebar-close"><i class="fa fa-caret-left"></i></span>
+        </h1>
+        <p></p>
+        <div id="ymPicker"> Выберите дату </div>
+        <select id="ddlViewBy"> Выберите высоту
+          <option value="wind10">10 метров</option>
+          <option value="wind50">50 метров</option>
+          <option value="wind80">80 метров</option>
+          <option value="wind100">100 метров</option>
+        </select><p></p>
+        <input type="checkbox" id="polygran" onchange="fun1()"checked> Включить/выключить границы
+        <p></p>
+        <div id="blockrange">
+          <p>
+            <code><h3>Радиус ротора ветрогенератора, м  <h3></code>
+          </p>
+          <input type="range" id="rangelop" value="4" min="2" max="100" step="1" oninput="funpolz1()" />
+          <input type="text" id="i1" readonly="readonly" value="4">
+        </div>
+        <p></p>
+        <div id="blockrange2">
+          <p>
+            <code><h3>КПД генератора, % <h3></code>
+          </p>
+          <input type="range" id="kpdrotor" value="80" min="60" max="95" step="5" oninput="funpolz1()" />
+          <input type="text" id="i2" readonly="readonly" value="80">
+        </div>
+        <p></p>
+
+        <div id="blockrange3">
+          <p>
+            <code><h3>КПД редуктора, % <h3></code>
+          </p>
+          <input type="range" id="kpdreductora" value="90" min="60" max="100" step="5" oninput="funpolz1()" />
+          <input type="text" id="i3" readonly="readonly" value="90">
+        </div>
+        <p> </p>
+        <p></p>
+        <button id="demo">Выполнить расчёты </button>
+      </div>
+      <div class="leaflet-sidebar-pane" id="graph">
+        <h1 class="leaflet-sidebar-header">
+          График прогнозируемой энергии
+          <span class="leaflet-sidebar-close"><i class="fa fa-caret-left"></i></span>
+        
+          <div id="textgraph"> График месячного изменения выработанной энергии на различных высотах в указанном районе за заданный год</div>
+          <div id="chart"></div> 
+        </h1>
+      </div>
+
+      <div class="leaflet-sidebar-pane" id="tablebar">
+        <h1 class="leaflet-sidebar-header">
+          Таблица скорости ветра
+          <p></p>
+          <select id="picktable"> Выберите высоту
+            <option value="windspeed">Скорость ветра</option>
+            <option value="windWT">Мощность ветроустановки</option>
+          </select>
+          <button id="refreshtable"><i class="fa fa-refresh"></i></button>
+          <button id='printTable'><i class="fa fa-print"></i></button>
+          <div id="texttable"> Таблица скорости ветра в районах за указанный период</div>
+          <table id="table" width="auto">
+            <thead>
+              <tr>
+                <th id='namedis'>Название района</th>
+                <th id='10tab'>10 метров</th>
+                <th id='50tab'>50 метров</th>
+                <th id='80tab'>80 метров</th>
+                <th id='100tab'>100 метров</th>
+              </tr>
+              <thead></thead>
+              <tr class="border_bottom">
+          </table>
+
+        </h1>
+      </div>
+    </div>
+  </div>
+</div>
+
+<body>
+  <script src="./windBash.js"></script>
+</body>
+
+</html>
