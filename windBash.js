@@ -28,8 +28,10 @@ function rangevalue() { //функция для ползунков
 jsondist = 0;
 async function get_points() {
   map.removeLayer(PointLayer);
-  var url = "rp5gis/service/city";
-  var url2 = "rp5gis/service/monthdis";
+  // var url = "rp5gis/service/city";
+  // var url2 = "rp5gis/service/monthdis";
+     var url = "http://rp5gis.myxomopx.ru/service/city";
+   var url2 = "http://rp5gis.myxomopx.ru/service/monthdis";
   let response = await fetch(url, {
     method: 'GET',
     headers: {
